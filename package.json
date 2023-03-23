@@ -9,8 +9,12 @@
   "bin": {
     "react-component-generator": "src/cli/cli.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yogi-dad/react-component-generator.git"
+  },
   "keywords": ["react","jest","enzyme","code generator","react component generator","react typescript component generator","boilerplate code","jest unit test file generator"],
-  "author": "",
+  "author": "Abhishek Garg <abhishek@3dvirtuallabs.com>",
   "license": "ISC",
   "dependencies": {
     "yargs": "^17.7.1"
