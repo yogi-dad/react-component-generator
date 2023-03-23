@@ -1,6 +1,15 @@
 # React Component Generator
-A command-line tool to generate React components and their respective Jest and Enzyme-based unit test cases files. It allows users to pass various named arguments like the path of the component, the path of the test case file, the component type (either functional or class-based, defaults to functional), and the file type (jsx or tsx, defaults to jsx).
+The react-component-generator is a command-line tool that streamlines the process of creating React components and their associated Jest and Enzyme-based unit test case files. The tool accepts various named arguments such as the component path, test case file path, component type (functional or class-based, defaulting to functional), and file type (jsx or tsx, defaulting to jsx). The package is designed to enhance productivity, enforce best practices, and maintain a consistent project structure.
 
+## Features:
+
+- Generates both functional and class-based React components.
+- Creates Jest and Enzyme-based unit test case files for each generated component.
+- Supports both JavaScript (JSX) and TypeScript (TSX) file formats.
+- Customizable component and test case file paths.
+- CLI-based tool for easy integration into your development workflow.
+
+The package can be easily installed and utilized in any React-based project, ensuring that developers can quickly and efficiently generate components and test case files without the need for manual boilerplate code creation.
 ## Installation
 
 Install the package globally using either of the following commands:
