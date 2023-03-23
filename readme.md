@@ -16,11 +16,11 @@ Install the package globally using either of the following commands:
 
 
 ```
-npm install -g react-component-generator
+npm i react-component-generator-with-jest
 ```
 or
 ```
-yarn global add react-component-generator
+yarn global add react-component-generator-with-jest
 ```
 ## Usage
 After installation, you can use the react-component-generator command in your terminal to create React components and test files. Pass the various options as arguments:
