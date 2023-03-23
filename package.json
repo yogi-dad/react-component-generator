@@ -1,6 +1,6 @@
 {
   "name": "react-component-generator-with-jest",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The react-component-generator is a command-line tool that streamlines the process of creating React components and their associated Jest and Enzyme-based unit test case files. The tool accepts various named arguments such as the component path, test case file path, component type (functional or class-based, defaulting to functional), and file type (jsx or tsx, defaulting to jsx). The package is designed to enhance productivity, enforce best practices, and maintain a consistent project structure.",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,16 @@
     "type": "git",
     "url": "https://github.com/yogi-dad/react-component-generator.git"
   },
-  "keywords": ["react","jest","enzyme","code generator","react component generator","react typescript component generator","boilerplate code","jest unit test file generator"],
+  "keywords": [
+    "react",
+    "jest",
+    "enzyme",
+    "code generator",
+    "react component generator",
+    "react typescript component generator",
+    "boilerplate code",
+    "jest unit test file generator"
+  ],
   "author": "Abhishek Garg <abhishek@3dvirtuallabs.com>",
   "license": "ISC",
   "dependencies": {
