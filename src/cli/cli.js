@@ -5,7 +5,7 @@ const path = require('path');
 const yargs = require('yargs/yargs');
 const { hideBin } = require('yargs/helpers');
 const { generateComponentAndTests } = require('../index');
-
+let defaultFileType = "jsx";
 function isReactProject() {
   const packageJsonPath = path.join(process.cwd(), 'package.json');
 
@@ -21,7 +21,9 @@ function isReactProject() {
     console.error('Error: react not found in package.json. Please ensure this is a React project.');
     return false;
   }
-
+if(dependencies && dependencies.typescript || devDependencies && devDependencies.typescript){
+  defaultFileType='tsx';
+}
   return true;
 }
 
@@ -52,7 +54,7 @@ const argv = yargs(hideBin(process.argv))
     alias: "f",
     type: "string",
     description: "File type (jsx or tsx)",
-    default: "jsx",
+    default: defaultFileType??"jsx",
   })
   .demandOption(["name"], "Please provide a component name")
   .help().argv;
