@@ -2,104 +2,119 @@ const fs = require("fs");
 const path = require("path");
 
 function createComponent({
-  componentName,
-  componentDir = "./src/components",
-  componentType = "function",
-  fileType = "jsx",
-}) {
-  const componentPath = path.join(componentDir, componentName);
-  const componentFile = path.join(
-    componentPath,
-    `${componentName}.${fileType}`
-  );
+                             componentName,
+                             componentDir = "./src/components",
+                             componentType = "function",
+                             fileType = "jsx",
+                             isReactNative = false
+                         }) {
+    const componentPath = path.join(componentDir, componentName);
+    const componentFile = path.join(
+        componentPath,
+        `${componentName}.${fileType}`
+    );
+    let viewTag = "div";
+    let textTag = "h1";
+    let additional = "";
+    let reactNativeStyling = "";
+if(isReactNative){
 
-  if (!fs.existsSync(componentPath)) {
-    fs.mkdirSync(componentPath, { recursive: true });
-  }
+    viewTag = "View";
+    textTag = "Text";
+    additional = `import {View,Text,StyleSheet} from 'react-native';`;
+    reactNativeStyling=`const styles=StyleSheet.create({
+    })`;
+}
+    if (!fs.existsSync(componentPath)) {
+        fs.mkdirSync(componentPath, {recursive: true});
+    }
 
-  let componentContent = "";
+    let componentContent = "";
 
-  if (fileType === "tsx") {
-    if (componentType === "class") {
-      componentContent = `import React, { Component } from 'react';
-
+    if (fileType === "tsx") {
+        if (componentType === "class") {
+            componentContent = `import React, { Component } from 'react';
+${additional}
 interface ${componentName}Props {}
 
 class ${componentName} extends Component<${componentName}Props> {
   render() {
     return (
-      <div>
-        <h1>${componentName}</h1>
-      </div>
+      <${viewTag}>
+        <${textTag}>${componentName}</${textTag}>
+      </${viewTag}>
     );
   }
 }
-
+${reactNativeStyling}
 export default ${componentName};
 `;
-    } else {
-      componentContent = `import React from 'react';
-
+        } else {
+            componentContent = `import React from 'react';
+${additional}
 interface ${componentName}Props {}
 
 const ${componentName}: React.FC<${componentName}Props> = () => {
   return (
-    <div>
-      <h1>${componentName}</h1>
-    </div>
+      <${viewTag}>
+        <${textTag}>${componentName}</${textTag}>
+      </${viewTag}>
   );
 };
+${reactNativeStyling}
 
 export default ${componentName};
 `;
-    }
-  } else {
-    if (componentType === "class") {
-      componentContent = `import React, { Component } from 'react';
-
+        }
+    } else {
+        if (componentType === "class") {
+            componentContent = `import React, { Component } from 'react';
+${additional}
 class ${componentName} extends Component {
   render() {
     return (
-      <div>
-        <h1>${componentName}</h1>
-      </div>
+      <${viewTag}>
+        <${textTag}>${componentName}</${textTag}>
+      </${viewTag}>
     );
   }
 }
+${reactNativeStyling}
 
 export default ${componentName};
 `;
-    } else {
-      componentContent = `import React from 'react';
-
+        } else {
+            componentContent = `import React from 'react';
+${additional}
 const ${componentName} = () => {
   return (
-    <div>
-      <h1>${componentName}</h1>
-    </div>
+      <${viewTag}>
+        <${textTag}>${componentName}</${textTag}>
+      </${viewTag}>
   );
 };
+${reactNativeStyling}
 
 export default ${componentName};
 `;
+        }
     }
-  }
 
-  fs.writeFileSync(componentFile, componentContent);
+    fs.writeFileSync(componentFile, componentContent);
 }
 
 function createTestFiles({
-  componentName,
-  componentDir = "./src/components",
-  fileType = "jsx",
-}) {
-  const componentPath = path.join(componentDir, componentName);
-  const testFile = path.join(
-    componentPath,
-    `${componentName}.test.${fileType}`
-  );
+                             componentName,
+                             componentDir = "./src/components",
+                             fileType = "jsx",
+                         }) {
+    const componentPath = path.join(componentDir, componentName);
+    const testFile = path.join(
+        componentPath,
+        `${componentName}.test.${fileType}`
+    );
 
-  const testContent = `import React from 'react';
+    const testContent = `import React from 'react';
 import { shallow } from 'enzyme';
 import ${componentName} from './${componentName}';
 
@@ -110,16 +125,16 @@ describe('<${componentName} />', () => {
 });
 `;
 
-  fs.writeFileSync(testFile, testContent);
+    fs.writeFileSync(testFile, testContent);
 }
 
 function generateComponentAndTests(options) {
-  createComponent(options);
-  createTestFiles(options);
+    createComponent(options);
+    createTestFiles(options);
 }
 
 module.exports = {
-  createComponent,
-  createTestFiles,
-  generateComponentAndTests,
+    createComponent,
+    createTestFiles,
+    generateComponentAndTests,
 };
