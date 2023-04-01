@@ -107,6 +107,7 @@ function createTestFiles({
                              componentName,
                              componentDir = "./src/components",
                              fileType = "jsx",
+    isReactNative=false
                          }) {
     const componentPath = path.join(componentDir, componentName);
     const testFile = path.join(
@@ -114,13 +115,23 @@ function createTestFiles({
         `${componentName}.test.${fileType}`
     );
 
-    const testContent = `import React from 'react';
+    const testContent = !isReactNative?`import React from 'react';
 import { shallow } from 'enzyme';
 import ${componentName} from './${componentName}';
 
 describe('<${componentName} />', () => {
   it('renders without crashing', () => {
     shallow(<${componentName} />);
+  });
+});
+`:`import React from 'react'
+import renderer from 'react-test-renderer';
+import ${componentName} from './${componentName}';
+
+describe('<${componentName} />', () => {
+  it('renders without crashing', () => {
+    const tree = renderer.create(<${componentName}/>).toJSON();
+    expect(tree.children.length).toBe(1);
   });
 });
 `;
