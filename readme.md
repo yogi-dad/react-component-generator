@@ -107,7 +107,7 @@ react-component-generator -n MyComponent -d ./src/customComponents -t class -f t
 if you encounter any issues or have suggestions for improvements, please report them using the GitHub Issues page for the react-component-generator-with-jest repository. This will help us address any problems and continue to enhance the package.
 
 To report an issue or make a suggestion, follow these steps:
-* Visit the GitHub Issues page for the react-component-generator-with-jest repository: https://github.com/your-username/react-component-generator-with-jest/issues
+* Visit the GitHub Issues page for the react-component-generator-with-jest repository: https://github.com/yogi-dad/react-component-generator/issues
 * Click the "New Issue" button.
 * Choose the appropriate issue template, such as "Bug Report" or "Feature Request."
 * Fill out the required information in the template, providing as much detail as possible to help us understand and resolve the issue.

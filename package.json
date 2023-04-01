@@ -21,7 +21,9 @@
     "react component generator",
     "react typescript component generator",
     "boilerplate code",
-    "jest unit test file generator"
+    "jest unit test file generator",
+    "react native",
+    "babel"
   ],
   "author": "Abhishek Garg <abhishek@3dvirtuallabs.com>",
   "license": "ISC",
