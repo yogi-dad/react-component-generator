@@ -1,6 +1,6 @@
 {
   "name": "react-component-generator-with-jest",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "The react-component-generator is a command-line tool that streamlines the process of creating React components and their associated Jest and Enzyme-based unit test case files. The tool accepts various named arguments such as the component path, test case file path, component type (functional or class-based, defaulting to functional), and file type (jsx or tsx, defaulting to jsx). The package is designed to enhance productivity, enforce best practices, and maintain a consistent project structure.",
   "main": "index.js",
   "scripts": {
