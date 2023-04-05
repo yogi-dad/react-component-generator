@@ -5,6 +5,7 @@ The react-component-generator is a command-line tool that streamlines the proces
 * Creates Jest and Enzyme-based unit test case files for each generated component.
 * Supports both JavaScript (JSX) and TypeScript (TSX) file formats.
 * Customizable component and test case file paths.
+* Supports Generation of styling files like modules, scss, sass or less files.
 * CLI-based tool for easy integration into your development workflow.
 
 The package can be easily installed and utilized in any React or React Native-based project, ensuring that developers can quickly and efficiently generate components and test case files without the need for manual boilerplate code creation.
@@ -15,6 +16,7 @@ Before using this package, ensure that you have the following dependencies insta
 * Jest
 * Enzyme
 * Babel (for React projects)
+* SCSS/SASS or Less (depending on a type of preprocessor)
 * TypeScript (if using TSX file format)
 
 ## Installation
@@ -87,22 +89,29 @@ yarn add -D jest jest-expo react-native react-test-renderer @babel/core @babel/p
 ```
 ## Usage
 After installation, you can use the react-component-generator command in your terminal to create React components and test files. Pass the various options as arguments:
-
 ```
 react-component-generator -n MyComponent -t function -f jsx
 ```
 This command will create a functional React component named "MyComponent" with a .jsx file type.
+
+```
+react-component-generator -n MyComponent -d ./src/customComponents -t function -f jsx
+```
+This command will create a functional React component named "MyComponent" with a .jsx file type in the custom directory (./src/customComponents).
+
+```
+react-component-generator -n MyComponent -t function -f jsx -c --style-type module
+```
+This command will create a functional React component named "MyComponent" with a .jsx file type and a CSS module in the default directory (./src/components).
 
 ## Options
 - -n, --name <name>: The component name (required)
 - -d, --dir <path>: The path for the component (default: "./src/components")
 - -t, --type <type>: The component type, either "class" or "function" (default: "function")
 - -f, --file-type <fileType>: The file type, either "jsx" or "tsx" (default: "jsx")
-## Example
-To create a class-based React component named "MyComponent" with a .tsx file type in the ./src/customComponents directory, run:
-```
-react-component-generator -n MyComponent -d ./src/customComponents -t class -f tsx
-```
+- -c, --css: whether to generate css or not (default:false)
+- -s, --style-type: what kind of css file to generate (default:module)
+
 ## Report Issues
 if you encounter any issues or have suggestions for improvements, please report them using the GitHub Issues page for the react-component-generator-with-jest repository. This will help us address any problems and continue to enhance the package.
 

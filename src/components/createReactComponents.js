@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const ejs = require("ejs");
 
 function createComponent({
                              componentName,
@@ -13,101 +14,46 @@ function createComponent({
         componentPath,
         `${componentName}.${fileType}`
     );
-    let viewTag = "div";
-    let textTag = "h1";
-    let additional = "";
-    let reactNativeStyling = "";
-if(isReactNative){
 
-    viewTag = "View";
-    textTag = "Text";
-    additional = `import {View,Text,StyleSheet} from 'react-native';`;
-    reactNativeStyling=`const styles=StyleSheet.create({
-    })`;
-}
     if (!fs.existsSync(componentPath)) {
         fs.mkdirSync(componentPath, {recursive: true});
     }
 
-    let componentContent = "";
 
-    if (fileType === "tsx") {
+    /*if (fileType === "tsx") {
         if (componentType === "class") {
-            componentContent = `import React, { Component } from 'react';
-${additional}
-interface ${componentName}Props {}
-
-class ${componentName} extends Component<${componentName}Props> {
-  render() {
-    return (
-      <${viewTag}>
-        <${textTag}>${componentName}</${textTag}>
-      </${viewTag}>
-    );
-  }
-}
-${reactNativeStyling}
-export default ${componentName};
-`;
+            componentContent = ``;
         } else {
-            componentContent = `import React from 'react';
-${additional}
-interface ${componentName}Props {}
-
-const ${componentName}: React.FC<${componentName}Props> = () => {
-  return (
-      <${viewTag}>
-        <${textTag}>${componentName}</${textTag}>
-      </${viewTag}>
-  );
-};
-${reactNativeStyling}
-
-export default ${componentName};
-`;
+            componentContent = ``;
         }
     } else {
         if (componentType === "class") {
-            componentContent = `import React, { Component } from 'react';
-${additional}
-class ${componentName} extends Component {
-  render() {
-    return (
-      <${viewTag}>
-        <${textTag}>${componentName}</${textTag}>
-      </${viewTag}>
-    );
-  }
-}
-${reactNativeStyling}
-
-export default ${componentName};
-`;
+            componentContent = ``;
         } else {
-            componentContent = `import React from 'react';
-${additional}
-const ${componentName} = () => {
-  return (
-      <${viewTag}>
-        <${textTag}>${componentName}</${textTag}>
-      </${viewTag}>
-  );
-};
-${reactNativeStyling}
-
-export default ${componentName};
-`;
+            componentContent = ``;
         }
-    }
-
-    fs.writeFileSync(componentFile, componentContent);
+    }*/
+    const ejsFilePath = path.join(__dirname, "templates", "component.ejs");
+    ejs.renderFile(ejsFilePath, {
+        componentName,
+        componentType,
+        isReactNative,
+        fileType,
+    }, (error, componentContent) => {
+        if (!error) {
+            fs.writeFileSync(componentFile, format(componentContent));
+        } else {
+            console.error(error)
+        }
+    })
 }
 
 function createTestFiles({
                              componentName,
+                             componentType,
                              componentDir = "./src/components",
                              fileType = "jsx",
-    isReactNative=false
+                             isReactNative = false
                          }) {
     const componentPath = path.join(componentDir, componentName);
     const testFile = path.join(
@@ -115,35 +61,49 @@ function createTestFiles({
         `${componentName}.test.${fileType}`
     );
 
-    const testContent = !isReactNative?`import React from 'react';
-import { shallow } from 'enzyme';
-import ${componentName} from './${componentName}';
-
-describe('<${componentName} />', () => {
-  it('renders without crashing', () => {
-    shallow(<${componentName} />);
-  });
-});
-`:`import React from 'react'
-import renderer from 'react-test-renderer';
-import ${componentName} from './${componentName}';
-
-describe('<${componentName} />', () => {
-  it('renders without crashing', () => {
-    const tree = renderer.create(<${componentName}/>).toJSON();
-    expect(tree.children.length).toBe(1);
-  });
-});
-`;
-
-    fs.writeFileSync(testFile, testContent);
+    const ejsFilePath = path.join(__dirname, "templates", "test.ejs");
+    ejs.renderFile(ejsFilePath, {
+        componentName,
+        componentType,
+        isReactNative,
+        fileType,
+    }, (error, testContent) => {
+        if (!error) {
+            fs.writeFileSync(testFile, format(testContent));
+        } else {
+            console.error(error)
+        }
+    });
 }
 
-function generateComponentAndTests(options) {
+function createCSSFiles({
+                            componentName,
+                            componentDir = "./src/components",
+                            cssType = 'module',
+                            isReactNative = false
+                        }) {
+    const componentPath = path.join(componentDir, componentName);
+    const cssFile = path.join(
+        componentPath,
+        `${componentName}.${cssType === 'module' ? '.module.css' : cssType}`
+    );
+
+
+    fs.writeFileSync(cssFile, '/*styling goes here*/');
+
+}
+
+async function generateComponentAndTests(options) {
     createComponent(options);
     createTestFiles(options);
+    if (options.css && !options.isReactNative)
+        createCSSFiles(options);
 }
 
+const format = (output) => {
+    return output.split('\n').map(line => line.trim()).join('\n').trim();
+
+}
 module.exports = {
     createComponent,
     createTestFiles,

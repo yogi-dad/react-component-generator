@@ -1,0 +1,10 @@
+import React,{Component} from 'react';
+<%- include ("./partials/tsInterface.ejs") %>
+class <%= componentName %> extends Component<<%= componentName %>Props> {
+    render(){
+    return (
+    <%- include ("./partials/render.ejs")%>
+    );
+    }
+    };
+export default <%= componentName %>;

@@ -1,0 +1,17 @@
+import React, { Component } from 'react';
+<% if(isReactNative) {
+%>import {View,Text,StyleSheet} from 'react-native';
+<%
+}%>class <%= componentName %> extends Component {
+render() {
+return (
+<%- include ("./partials/render.ejs") %>
+
+);
+}
+}
+<% if(isReactNative) { %>
+    const styles=StyleSheet.create({
+    })
+<%}%>
+export default <%= componentName %>;

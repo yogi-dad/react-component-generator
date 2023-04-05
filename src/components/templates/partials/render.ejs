@@ -1,0 +1,5 @@
+<% if(isReactNative) { %>
+    <%- include ("./react-native-render.ejs") %>
+<% } else { %>
+    <%- include ("./react-render.ejs") %>
+<% } %>

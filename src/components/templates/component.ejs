@@ -1,0 +1,5 @@
+<% var fileName = fileType+"-function-component.ejs"%>
+<% if(componentType=="class"){ %>
+    <% fileName=fileType+"-class-component.ejs" %>
+<% } %>
+<%- include (fileName) %>

@@ -1,0 +1,10 @@
+import React from 'react';
+import renderer from 'react-test-renderer';
+import <%= componentName %> from './<%= componentName %>';
+
+describe('<<%= componentName %> />', () => {
+it('renders without crashing', () => {
+const tree = renderer.create(< <%= componentName %> />).toJSON();
+expect(tree.children.length).toBe(1);
+});
+});

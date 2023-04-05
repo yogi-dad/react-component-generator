@@ -1,0 +1,8 @@
+import React from 'react';
+<%- include ("./partials/tsInterface.ejs") %>
+const <%= componentName %>: React.FC<<%= componentName %>Props> = () => {
+    return (
+    <%- include ('./partials/render.ejs') %>
+    )
+    };
+export default <%= componentName %>;

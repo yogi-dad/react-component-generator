@@ -60,6 +60,18 @@ const argv = yargs(hideBin(process.argv))
         description: "File type (jsx or tsx)",
         default: defaultFileType ?? "jsx",
     })
+    .option("css", {
+        alias: "c",
+        type: "boolean",
+        description: "Need css file or not",
+        default: false,
+    })
+    .option("style-type", {
+        alias: "s",
+        type: "string",
+        description: "Type of css file (module,scss,less,sass)",
+        default: "module",
+    })
     .demandOption(["name"], "Please provide a component name")
     .help().argv;
 
@@ -68,6 +80,8 @@ const options = {
     componentDir: argv.dir,
     componentType: argv.type,
     fileType: argv["file-type"],
+    css:argv['css'],
+    cssType:argv['style-type'],
     isReactNative
 };
 
