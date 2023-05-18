@@ -2,13 +2,13 @@ const fs = require("fs");
 const path = require("path");
 const ejs = require("ejs");
 
-function createComponent({
+const createComponent = ({
                              componentName,
                              componentDir = "./src/components",
                              componentType = "function",
                              fileType = "jsx",
                              isReactNative = false
-                         }) {
+                         }) => {
     const componentPath = path.join(componentDir, componentName);
     const componentFile = path.join(
         componentPath,
@@ -46,15 +46,15 @@ function createComponent({
             console.error(error)
         }
     })
-}
+};
 
-function createTestFiles({
+const createTestFiles = ({
                              componentName,
                              componentType,
                              componentDir = "./src/components",
                              fileType = "jsx",
                              isReactNative = false
-                         }) {
+                         }) => {
     const componentPath = path.join(componentDir, componentName);
     const testFile = path.join(
         componentPath,
@@ -74,14 +74,14 @@ function createTestFiles({
             console.error(error)
         }
     });
-}
+};
 
-function createCSSFiles({
+const createCSSFiles = ({
                             componentName,
                             componentDir = "./src/components",
                             cssType = 'module',
                             isReactNative = false
-                        }) {
+                        }) => {
     const componentPath = path.join(componentDir, componentName);
     const cssFile = path.join(
         componentPath,
@@ -91,14 +91,14 @@ function createCSSFiles({
 
     fs.writeFileSync(cssFile, '/*styling goes here*/');
 
-}
+};
 
-async function generateComponentAndTests(options) {
+const generateComponentAndTests = async options => {
     createComponent(options);
     createTestFiles(options);
     if (options.css && !options.isReactNative)
         createCSSFiles(options);
-}
+};
 
 const format = (output) => {
     return output.split('\n').map(line => line.trim()).join('\n').trim();

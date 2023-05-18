@@ -7,7 +7,7 @@ const {hideBin} = require('yargs/helpers');
 const {generateComponentAndTests} = require('../index');
 let defaultFileType = "jsx";
 let isReactNative = false;
-function isReactProject() {
+const isReactProject = () => {
     const packageJsonPath = path.join(process.cwd(), 'package.json');
 
     if (!fs.existsSync(packageJsonPath)) {
@@ -29,7 +29,7 @@ function isReactProject() {
         defaultFileType = 'tsx';
     }
     return true;
-}
+};
 
 if (!isReactProject()) {
     process.exit(1);
@@ -74,9 +74,20 @@ const argv = yargs(hideBin(process.argv))
     })
     .demandOption(["name"], "Please provide a component name")
     .help().argv;
+const sanitizeAndConvertToTitleCase = str => {
+    // Step 1: Remove special characters and convert first letter after every special character to uppercase
+    str = str.replace(/[^A-Za-z0-9](\S)/g, function(letter1, letter2){
+        return letter2.toUpperCase()
+    });
+
+    // Step 2: Convert the first character of the overall string to uppercase
+    str = str.charAt(0).toUpperCase() + str.slice(1);
+
+    return str;
+};
 
 const options = {
-    componentName: argv.name,
+    componentName: sanitizeAndConvertToTitleCase(argv.name),
     componentDir: argv.dir,
     componentType: argv.type,
     fileType: argv["file-type"],
